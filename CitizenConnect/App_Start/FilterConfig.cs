@@ -1,11 +1,13 @@
 ﻿using System;
+using System.Web;
 using System.Web.Mvc;
+
 using RequireHttpsAttributeBase = System.Web.Mvc.RequireHttpsAttribute;
 
-namespace AppHarbor.Web
+namespace ToDo
 {
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true,
-        AllowMultiple = false)]
+
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = false)]
     public class RequireHttpsAttribute : RequireHttpsAttributeBase
     {
         public override void OnAuthorization(AuthorizationContext filterContext)
@@ -33,6 +35,16 @@ namespace AppHarbor.Web
             }
 
             HandleNonHttpsRequest(filterContext);
+        }
+    }
+
+
+    public class FilterConfig
+    {
+        public static void RegisterGlobalFilters(GlobalFilterCollection filters)
+        {
+            filters.Add(new HandleErrorAttribute());
+            filters.Add(new RequireHttpsAttribute());
         }
     }
 }
